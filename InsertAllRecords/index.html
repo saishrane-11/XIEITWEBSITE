@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Insert Records</title>
+
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        * {
+            font-family: cursive;
+        }
+
+        select {
+            padding: 2px;
+            border-radius: 4px;
+            border: transparent;
+            background-color: gainsboro;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <div class="signup-form">
+                        <h2 class="form-title">Insert Records</h2>
+                        <div class="form-group">
+
+                            <select name="" id="sel">
+                                <!-- <option value="none">--select--</option> -->
+                                <option value="students">Students</option>
+                                <option value="teachers">Teachers</option>
+                                <option value="HOD">HOD</option>
+                            </select>
+                            <select name="" id="sel1">
+                                <!-- <option value="none">--select--</option> -->
+                                <option value="SE">SE</option>
+                                <option value="TE">TE</option>
+                                <option value="BE">BE</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <input type="text" name="name" id="name" placeholder="Name" />
+                        </div>
+                        <div class="form-group">
+                            <label for="email"><i class="zmdi zmdi-email"></i></label>
+                            <input type="email" name="email" id="email" placeholder="Email" />
+                        </div>
+                        <div class="form-group">
+                            <label for="pass"><i class="zmdi zmdi-lock"></i></label>
+                            <input type="text" name="pass" id="contact" placeholder="Contact" />
+                        </div>
+
+
+                        <div class="form-group form-button">
+                            <input type="submit" name="signup" id="btn" class="form-submit" value="Insert"
+                                onclick="insertData()" />
+                        </div>
+
+                    </div>
+                    <div class="signup-image">
+                        <figure><img src="images/signup-image.jpg" alt="sing up image"></figure>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+
+
+
+
+
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDQTsUUzs57YlGkfkwpfeUFfzci1UsMXNo",
+            authDomain: "try1-df428.firebaseapp.com",
+            databaseURL: "https://try1-df428-default-rtdb.firebaseio.com",
+            projectId: "try1-df428",
+            storageBucket: "try1-df428.appspot.com",
+            messagingSenderId: "890216935864",
+            appId: "1:890216935864:web:809cd96fefbc4be0ae5f4d",
+            measurementId: "G-VJQVKG019P"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+
+    </script>
+    <script>
+        function insertData() {
+
+            var a = document.getElementById('sel').value;
+            var email = document.getElementById('email').value;
+            var branch = document.getElementById('sel1').value;
+            var name = document.getElementById('name').value;
+            var contact = document.getElementById('contact').value;
+            // var password = document.getElementById('password').value;
+            var idV = email.slice(0, 9);
+            console.log(email, name, contact, idV)
+            if (a == 'students') {
+                console.log("student");
+                if (branch == 'SE') {
+                    firebase.database().ref("students/IT/SE/" + idV).set(
+                        {
+                            ID: idV,
+                            FULLNAME: name,
+                            EMAIL: email,
+                            CONTACT: contact,
+                            PASSWORD: idV,
+                        }
+                    );
+                    alert("SE STUDENT DATA INSERTED")
+                    document.getElementById('email').value = "";
+                    document.getElementById('name').value = "";
+                    document.getElementById('contact').value = "";
+                } else if (branch == 'TE') {
+                    firebase.database().ref("students/IT/TE/" + idV).set(
+                        {
+                            ID: idV,
+                            FULLNAME: name,
+                            EMAIL: email,
+                            CONTACT: contact,
+                            PASSWORD: idV,
+                        }
+                    );
+                    alert("TE STUDENT DATA INSERTED")
+                    document.getElementById('email').value = "";
+                    document.getElementById('name').value = "";
+                    document.getElementById('contact').value = "";
+                } else {
+                    firebase.database().ref("students/IT/BE/" + idV).set(
+                        {
+                            ID: idV,
+                            FULLNAME: name,
+                            EMAIL: email,
+                            CONTACT: contact,
+                            PASSWORD: idV,
+                        }
+                    );
+                    alert("BE STUDENT DATA INSERTED")
+                    document.getElementById('email').value = "";
+                    document.getElementById('name').value = "";
+                    document.getElementById('contact').value = "";
+                }
+
+            } else if (a == 'teachers') {
+                console.log("new teachers")
+                firebase.database().ref("Teachers/IT/TE/" + idV).set(
+                    {
+                        ID: idV,
+                        FULLNAME: name,
+                        EMAIL: email,
+                        CONTACT: contact,
+                        PASSWORD: idV,
+                    }
+                );
+                alert("TEACHER DATA INSERTED")
+                document.getElementById('email').value = "";
+                document.getElementById('name').value = "";
+                document.getElementById('contact').value = "";
+            } else if (a == "HOD") {
+                alert("HOD")
+                
+                firebase.database().ref("HOD/IT/" + idV).set(
+                    {
+                        ID: idV,
+                        FULLNAME: name,
+                        EMAIL: email,
+                        CONTACT: contact,
+                        PASSWORD: idV,
+                    }
+                );
+                alert("TEACHER DATA INSERTED")
+                document.getElementById('email').value = "";
+                document.getElementById('name').value = "";
+                document.getElementById('contact').value = "";
+            }
+        }
+
+
+    </script>
+
+
+
+</body>
+
+</html>

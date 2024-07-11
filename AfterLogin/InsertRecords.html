@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details</title>
+</head>
+
+<body>
+
+    <h2>Student Details</h2>
+
+    <select name="" id="sel">
+        <option value="students">STUDENTS</option>
+        <option value="teachers">teachers</option>
+
+    </select> <br> <br>
+    <label for="fullName">FULL NAME:</label>
+    <input type="text" id="name" name="fullName" required>
+    <br>
+    <label for="email">EMAIL:</label>
+    <input type="email" id="email" name="email" required>
+    <br>
+    <label for="contact">CONTACT:</label>
+    <input type="tel" id="contact" name="contact" required>
+    <br>
+    <label for="password">PASSWORD:</label>
+    <input type="password" id="password" name="password" required>
+    <br>
+    <input type="submit" onclick="insertData()" value="Submit">
+
+
+
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
+    <script src="../config.js"></script>
+    <script>
+        function insertData() {
+
+            var a = document.getElementById('sel').value;
+            var email = document.getElementById('email').value;
+            var name = document.getElementById('name').value;
+            var contact = document.getElementById('contact').value;
+            var password = document.getElementById('password').value;
+            var idV = email.slice(0, 9);
+            console.log(email, name, contact, password, idV)
+            if (a == 'students') {
+                console.log("student");
+                firebase.database().ref("students/IT/TE/" + idV).set(
+                    {
+                        ID: idV,
+                        FULLNAME: name,
+                        EMAIL: email,
+                        CONTACT: contact,
+                        PASSWORD: password,
+                    }
+                );
+                alert("DATA INSERTED")
+            } else {
+                console.log("teacher");
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>

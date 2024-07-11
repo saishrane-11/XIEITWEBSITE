@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    Upload pdf
+    pdf's:
+    <input type="text" name="" id="name" placeholder="give unique name">
+    <input type="file" name="" id="pdf">
+    <input type="submit" value="Submit" onclick="inputPDF()">
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
+    <script src="../config.js"></script>
+    
+    <script>
+        var dateV;
+        function inputPDF() {
+            const ref = firebase.storage().ref("generalPDF/");
+            const file = document.querySelector("#pdf").files[0];
+            const name = document.getElementById('name').value;
+
+            dateV = new Date();
+            dt = dateV.getDate()+"-"+dateV.getMonth()+"-"+dateV.getFullYear();
+            console.log(dt);
+            console.log(name);
+            const metadata = {
+                contentType: file.type
+            }
+            const task = ref.child(name).put(file, metadata);
+            task.then(snapshot => snapshot.ref.getDownloadURL()).then(url => {
+                console.log(url);
+                var a = 2;
+                alert("pdf uploaded");
+                firebase.database().ref("genralPDF/" + name).set(
+                    {
+                        pdfname: name,
+                        pdfurl: url,
+                        date: dt
+                    });
+
+            })
+
+        }
+    </script>
+</body>
+
+</html>
